@@ -31,17 +31,21 @@ daemonset:
       filebeat.inputs:
       - type: container
         paths:
-          - /var/log/containers/*.log
+          - /var/log/containers/*my-app*.log
         processors:
         - add_kubernetes_metadata:
             host: ${NODE_NAME}
             matchers:
             - logs_path:
                 logs_path: "/var/log/containers/"
-
+ 
       output.elasticsearch:
-        host: '${NODE_NAME}'
+        # host: '${NODE_NAME}'
         hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        index: 'my-custom-index'
+      setup.template:
+        name: 'my-custom-index'
+        pattern: 'my-custom-index'
   # Only used when updateStrategy is set to "RollingUpdate"
   maxUnavailable: 1
   nodeSelector: {}
@@ -66,7 +70,7 @@ daemonset:
       cpu: "1000m"
       memory: "200Mi"
   tolerations: []
-
+ 
 deployment:
   # Annotations to apply to the deployment
   annotations: {}
@@ -97,10 +101,10 @@ deployment:
       - type: tcp
         max_message_size: 10MiB
         host: "localhost:9000"
-
+ 
       output.elasticsearch:
-        host: '${NODE_NAME}'
-        hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
+        # host: '${NODE_NAME}'
+        # hosts: '${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}'
   nodeSelector: {}
   # A list of secrets and their paths to mount inside the pod
   # This is useful for mounting certificates for security other sensitive values
@@ -123,21 +127,21 @@ deployment:
       cpu: "1000m"
       memory: "200Mi"
   tolerations: []
-
+ 
 # Replicas being used for the filebeat deployment
 replicas: 1
-
+ 
 extraContainers: ""
 # - name: dummy-init
 #   image: busybox
 #   command: ['echo', 'hey']
-
+ 
 extraInitContainers: []
 # - name: dummy-init
-
+ 
 # Root directory where Filebeat will write data to in order to persist registry data across pod restarts (file position and other metadata).
 hostPathRoot: /var/lib
-
+ 
 dnsConfig: {}
 # options:
 #   - name: ndots
@@ -151,7 +155,7 @@ image: "docker.elastic.co/beats/filebeat"
 imageTag: "7.15.0"
 imagePullPolicy: "IfNotPresent"
 imagePullSecrets: []
-
+ 
 livenessProbe:
   exec:
     command:
@@ -164,7 +168,7 @@ livenessProbe:
   initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 5
-
+ 
 readinessProbe:
   exec:
     command:
@@ -177,10 +181,10 @@ readinessProbe:
   initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 5
-
+ 
 # Whether this chart should self-manage its service account, role, and associated role binding.
 managedServiceAccount: true
-
+ 
 clusterRoleRules:
   - apiGroups:
       - ""
@@ -192,32 +196,32 @@ clusterRoleRules:
       - get
       - list
       - watch
-
+ 
 podAnnotations:
   {}
   # iam.amazonaws.com/role: es-cluster
-
+ 
 # Custom service account override that the pod will use
 serviceAccount: ""
-
+ 
 # Annotations to add to the ServiceAccount that is created if the serviceAccount value isn't set.
 serviceAccountAnnotations:
   {}
   # eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/k8s.clustername.namespace.serviceaccount
-
+ 
 # How long to wait for Filebeat pods to stop gracefully
 terminationGracePeriod: 30
 # This is the PriorityClass settings as defined in
 # https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 priorityClassName: ""
-
+ 
 updateStrategy: RollingUpdate
-
+ 
 # Override various naming aspects of this chart
 # Only edit these if you know what you're doing
 nameOverride: ""
 fullnameOverride: ""
-
+ 
 # DEPRECATED
 affinity: {}
 envFrom: []
