@@ -1,0 +1,138 @@
+apiVersion: v1
+#kind of Kubernetes Object
+kind: PersistentVolume
+metadata:
+  #name of the persistent volume
+  name: pv-logging011
+spec:
+  capacity:
+    #starage allocated for the persistent volume
+    storage: 20Gi
+  accessModes:
+    #Previledge
+    - ReadWriteOnce
+  storageClassName: local-storage
+  local:
+    path: /mnt/volume/disk1 # Path to the directory this PV refers to.
+  nodeAffinity: # nodeAffinity is required when using local volumes.
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - cluster-qa-node1
+          - cluster-qa-node2
+          - cluster-qa-node3
+ 
+---
+apiVersion: v1
+#kind of Kubernetes Object
+kind: PersistentVolume
+metadata:
+  #name of the persistant volume
+  name: pv-logging021
+spec:
+  capacity:
+    #starage allocated for the persistent volume
+    storage: 20Gi
+  accessModes:
+    #Previledge
+    - ReadWriteOnce
+  storageClassName: local-storage
+  local:
+    path: /mnt/volume/disk2 # Path to the directory this PV refers to.
+  nodeAffinity: # nodeAffinity is required when using local volumes.
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - cluster-qa-node1
+          - cluster-qa-node2
+          - cluster-qa-node3
+  
+---
+apiVersion: v1
+#kind of Kubernetes Object
+kind: PersistentVolume
+metadata:
+  #name of the persistant volume
+  name: pv-logging031
+spec:
+  capacity:
+    #starage allocated for the persistent volume
+    storage: 20Gi
+  accessModes:
+    #Previledge
+    - ReadWriteOnce
+  storageClassName: local-storage
+  local:
+    path: /mnt/volume/disk3 # Path to the directory this PV refers to.
+  nodeAffinity: # nodeAffinity is required when using local volumes.
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - cluster-qa-node1
+          - cluster-qa-node2
+          - cluster-qa-node3
+ 
+---
+apiVersion: v1
+#kind of Kubernetes Object
+kind: PersistentVolume
+metadata:
+  #name of the persistant volume
+  name: pv-logging041
+spec:
+  capacity:
+    #starage allocated for the persistent volume
+    storage: 20Gi
+  accessModes:
+    #Previledge
+    - ReadWriteOnce
+  storageClassName: local-storage
+  local:
+    path: /mnt/volume/disk4 # Path to the directory this PV refers to.
+  nodeAffinity: # nodeAffinity is required when using local volumes.
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - cluster-qa-node1
+          - cluster-qa-node2
+          - cluster-qa-node3
+ 
+---
+apiVersion: v1
+#kind of Kubernetes Object
+kind: PersistentVolume
+metadata:
+  #name of the persistant volume
+  name: pv-logging051
+spec:
+  capacity:
+    #starage allocated for the persistent volume
+    storage: 20Gi
+  accessModes:
+    #Previledge
+    - ReadWriteOnce
+  storageClassName: local-storage
+  local:
+    path: /mnt/volume/disk4 # Path to the directory this PV refers to.
+  nodeAffinity: # nodeAffinity is required when using local volumes.
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - cluster-qa-node1
+          - cluster-qa-node2
+          - cluster-qa-node3
